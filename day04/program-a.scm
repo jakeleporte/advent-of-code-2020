@@ -7,15 +7,10 @@
 (define required-fields '("byr" "iyr" "eyr" "hgt" "hcl" "ecl" "pid"))
 
 (define (field-name str)
-  (car (string-tokenize str
-			(char-set-complement (char-set #\:)))))
+  (car (string-tokenize str (char-set-complement (char-set #\:)))))
 
 (define (field-value str)
-  (cadr (string-tokenize str
-			 (char-set-complement (char-set #\:)))))
-
-(define (filled-field? str)
-  (not (string-null? (field-value str))))
+  (cadr (string-tokenize str (char-set-complement (char-set #\:)))))
 
 (define (read-passport-fields)
   "For a passport on stdin, determine which filled fields
@@ -23,11 +18,9 @@ it contains and return the names in a list"
   (let read-loop ((line (read-line)) (fields '()))
     (if (or (eof-object? line) (string-null? line))
 	fields
-	;; Read each new field into the passport
-	;; Filter out those that are not filled
-	(let ((filled-fields (filter filled-field? (string-tokenize line))))
-	  (read-loop (read-line)
-		     (append fields (map field-name filled-fields)))))))
+	;; Add new field names to list
+	(read-loop (read-line)
+		   (append fields (map field-name (string-tokenize line)))))))
 
   (define (main)
     (let loop ((passport-fields (read-passport-fields))
