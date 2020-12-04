@@ -1,7 +1,7 @@
 #!/usr/bin/env guile
 !#
 
-(use-modules (ice-9 rdelim) (srfi srfi-1) (srfi srfi-9) (ice-9 regex))
+(use-modules (ice-9 rdelim) (ice-9 regex))
 
 (define hgt-regexp (make-regexp "^([[:digit:]]+)(cm|in)$"))
 (define hcl-regexp (make-regexp "^(#[[:xdigit:]]{6})$"))
