@@ -25,6 +25,6 @@ standard input"
 
 (define (main)
   (let ((grid (read-grid)))
-    (display (count-trees grid))))
+    (display (count-trees grid)) (newline)))
 
 (main)
