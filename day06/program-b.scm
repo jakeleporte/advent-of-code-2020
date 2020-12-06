@@ -1,7 +1,7 @@
 #!/usr/bin/env guile
 !#
 
-(use-modules (ice-9 rdelim) (srfi srfi-1))
+(use-modules (ice-9 rdelim))
 
 (define (process-customs-form-b)
   (define first-line (read-line))
