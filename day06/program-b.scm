@@ -1,8 +1,6 @@
 #!/usr/bin/env guile
 !#
 
-;;; Using lset
-
 (use-modules (ice-9 rdelim) (srfi srfi-1))
 
 (define (process-customs-form-b)
