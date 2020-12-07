@@ -37,6 +37,6 @@ numbers of CHAR, inclusive"
 	  (if (verify-password-a char min max pass)
 	      (loop (read-password-line) (1+ valid-pass-count))
 	      (loop (read-password-line) valid-pass-count)))
-	(display valid-pass-count))))
+	(begin (display valid-pass-count) (newline)))))
 
 (main)
