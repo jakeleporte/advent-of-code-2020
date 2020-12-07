@@ -28,6 +28,6 @@ and return #t if it sums to SUM with any of them"
 
 (define (main)
   (let ((numbers (read-numbers)))
-    (display (reduce * 1 (find-pair 2020 numbers)))))
+    (display (reduce * 1 (find-pair 2020 numbers))) (newline)))
 
 (main)

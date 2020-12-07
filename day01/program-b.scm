@@ -28,6 +28,6 @@
 
 (define (main)
   (let ((numbers (read-numbers)))
-    (display (reduce * 1 (find-triplet 2020 numbers)))))
+    (display (reduce * 1 (find-triplet 2020 numbers))) (newline)))
 
 (main)
