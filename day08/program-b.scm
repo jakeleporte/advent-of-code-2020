@@ -19,19 +19,16 @@
 the accumulator value; if the program does not halt,
 return #f (suck it Turing)"
   (define visited (make-hash-table (vector-length code)))
-  (let loop ((pc 0)
-	     (acc 0))
-    (if (hash-ref visited pc)
-	#f
-	(begin
-	  (hash-set! visited pc #t)
-	  (receive (op arg) (values (car (vector-ref code pc))
-				    (cdr (vector-ref code pc)))
-	    (match op
-	      ("nop" (loop (1+ pc) acc))
-	      ("jmp" (loop (+ pc arg) acc))
-	      ("acc" (loop (1+ pc) (+ acc arg)))
-	      ("hlt" acc)))))))
+  (let loop ((pc 0) (acc 0))
+    (if (hash-ref visited pc) #f
+	(begin (hash-set! visited pc #t)
+	       (receive (op arg) (values (car (vector-ref code pc))
+					 (cdr (vector-ref code pc)))
+		 (match op
+		   ("nop" (loop (1+ pc) acc))
+		   ("jmp" (loop (+ pc arg) acc))
+		   ("acc" (loop (1+ pc) (+ acc arg)))
+		   ("hlt" acc)))))))
 
 (define (fix-code code)
   "Run code, changing successive nop and jmp instructions
