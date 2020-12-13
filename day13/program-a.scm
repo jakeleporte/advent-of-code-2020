@@ -4,17 +4,16 @@
 (use-modules (ice-9 rdelim) (srfi srfi-1))
 
 (define (earliest-bus)
-  "Return the input initial arrival time and the wait time
-until the earliest bus."
+  "Return the wait time and bus-id of the earliest leaving bus."
   (let* ((arrival-time (string->number (read-line)))
 	 (busses (map string->number
 		      (string-tokenize (read-line) char-set:digit)))
 	 (wait-times (map (lambda (bus) (- bus (modulo arrival-time bus)))
 			  busses))
-	 (min-wait (apply min wait-times))
-	 (bus-id (find (lambda (bus) (= (- bus (modulo arrival-time bus))
-					min-wait)) busses)))
-    (values bus-id min-wait)))
+	 (target (reduce (lambda (e1 e2) (if (< (car e1) (car e2)) e1 e2))
+			 #f
+			 (zip wait-times busses))))
+    (values (car target) (cadr target))))
 
 (define (main)
   (display (call-with-values earliest-bus *)) (newline))
