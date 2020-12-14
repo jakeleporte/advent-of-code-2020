@@ -12,8 +12,8 @@ an initial seat arrangement"
 
 (define (count-adjacent-filled seats x y)
   (define adjacent '((-1 . -1) (-1 . 0) (-1 . 1)
-		     (0 . -1) (0 . 0) (0 . 1)
-		     (1 . -1) (1 . 0) (1 . 1)))
+		     (0 . -1)           (0 . 1)
+		     (1 . -1)  (1 . 0)  (1 . 1)))
   (define count 0)
   (for-each
    (lambda (coor)
@@ -30,7 +30,7 @@ an initial seat arrangement"
      (cond ((and (char=? (array-ref seats x y) #\L)
 		 (= (count-adjacent-filled seats x y) 0)) #\#)
 	   ((and (char=? (array-ref seats x y) #\#)
-		 (> (count-adjacent-filled seats x y) 4)) #\L)
+		 (> (count-adjacent-filled seats x y) 3)) #\L)
 	   (else (array-ref seats x y)))))
   next-seats)
 
