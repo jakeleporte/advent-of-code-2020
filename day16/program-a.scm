@@ -10,11 +10,6 @@
 (define rules-rx
   (make-regexp "(.+): ([0-9]+)-([0-9]+) or ([0-9]+)-([0-9]+)"))
 
-(define-syntax call/ret
-  (syntax-rules ()
-    ((call/ret exp)
-     (call/cc (lambda (ret) exp)))))
-
 (define (read-rules)
   "Read in a list of rules and return a character set
 representing the allowed values for each ticket"
