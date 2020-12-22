@@ -30,7 +30,7 @@ queue, with the rear being worth 1, and the front being worth
 (define (hash-round deck-1 deck-2)
   (let ((s1 (string-join (map number->string (car deck-1))))
 	(s2 (string-join (map number->string (car deck-2)))))
-    (string-append s1 s2)))
+    (string-append s1 "#" s2)))
     
 
 (define* (copy-deck deck #:optional card)
