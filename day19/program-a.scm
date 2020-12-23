@@ -3,10 +3,6 @@
 
 (use-modules (ice-9 rdelim) (ice-9 regex) (ice-9 peg))
 
-(define rn-rx (make-regexp "([0-9]+):"))
-(define paren-rx (make-regexp "\""))
-(define or-rx (make-regexp ".*: (.*) | (.*)"))
-
 (define-syntax macro-literal-insert
   (syntax-rules ()
     ((macro-literal-insert macro var)
