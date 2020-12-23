@@ -3,20 +3,20 @@
 
 (use-modules (ice-9 rdelim) (srfi srfi-1))
 
-(define (remove-sublist! cyc curr len)
+(define (remove-sublist! cyc ht curr len)
   "Remove a list of length LEN from the circular list
 CYC starting after the element eqv? to curr and return 
 the removed sublist."
-  (let* ((cl (memv curr cyc))
+  (let* ((cl (hash-ref ht curr))
 	 (sl (cdr cl)))
     (set-cdr! cl (list-tail cl (1+ len)))
     (set-cdr! (list-tail sl (1- len)) '())
     sl))
 
-(define (insert-sublist! cyc dst sl)
+(define (insert-sublist! cyc ht dst sl)
   "Insert the list SL in the circular list CYC after
 the element eqv? to DST"
-  (let* ((bl (memv dst cyc))
+  (let* ((bl (hash-ref ht dst))
 	 (al (cdr bl)))
     (set-cdr! bl sl)
     (set-cdr! (last-pair sl) al)))
@@ -31,17 +31,24 @@ the element eqv? to DST"
      (else
       (loop (1- dst))))))
 
+(define (list-map lst)
+  (define ht (make-hash-table))
+  (let loop ((rest lst))
+    (if (null? rest) ht
+	(begin
+	  (hash-set! ht (car rest) rest)
+	  (loop (cdr rest))))))
+
 (define (crab-cups lst n)
   (define len (length lst))
-  (define cyc (apply circular-list lst))
-  (let loop ((cl cyc) (moves n))
+  (define ht (list-map lst))
+  (set-cdr! (last-pair lst) lst)
+  (let loop ((cl lst) (moves n))
     (if (= moves 0) cl
 	(let* ((curr (car cl))
-	       (sl (remove-sublist! cl curr 3))
+	       (sl (remove-sublist! cl ht curr 3))
 	       (dst (find-dst curr len sl)))
-	  (when (= 0 (modulo moves 1000000))
-	    (display moves) (newline))
-	  (insert-sublist! cl dst sl)
+	  (insert-sublist! cl ht dst sl)
 	  (loop (cdr cl) (1- moves))))))    
 
 (define (main)
