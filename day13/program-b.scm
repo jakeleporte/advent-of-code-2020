@@ -13,8 +13,7 @@ decreasing modulus"
   (let ((bus-ids (map string->number
 		      (string-tokenize (read-line) char-set:letter+digit))))
     (sort (map (lambda (e) (cons (modulo (car e) (cadr e)) (cadr e)))
-	       (filter (lambda (e) (cadr e))
-		       (zip (iota (length bus-ids) 0 -1) bus-ids)))
+	       (filter cadr (zip (iota (length bus-ids) 0 -1) bus-ids)))
 	  (lambda (e1 e2) (> (cdr e1) (cdr e2))))))
 
 (define (crt-seive congruences)
