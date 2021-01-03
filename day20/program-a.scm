@@ -93,8 +93,7 @@ edges lined up."
   product)
 
 (define (main)
-  (let* ((tiles (read-tiles)))
-    (display (corner-ids-product tiles)) (newline)
-    ))
+  (let ((tiles (read-tiles)))
+    (display (corner-ids-product tiles)) (newline)))
 
 (main)
